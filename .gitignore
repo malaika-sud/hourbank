@@ -1,0 +1,37 @@
+# macOS
+.DS_Store
+
+# Env files
+.env
+.env.*
+!.env.example
+
+# Node / TypeScript
+node_modules/
+.next/
+dist/
+build/
+coverage/
+*.tsbuildinfo
+
+# Logs
+*.log
+npm-debug.log*
+pnpm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Local data
+.turbo/
+.vercel/
+tmp/
+infra/.data/
+
+# Go
+bin/
+*.test
+
+# Python, for the later appraiser service
+__pycache__/
+.venv/
+.pytest_cache/

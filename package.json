@@ -1,0 +1,9 @@
+{
+  "name": "timebank",
+  "private": true,
+  "scripts": {
+    "dev": "echo \"App packages have not been scaffolded yet\"",
+    "lint": "echo \"No lint step yet\"",
+    "test": "echo \"No tests yet\""
+  }
+}
