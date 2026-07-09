@@ -2,7 +2,7 @@
 
 HourBank is a neighborhood service-exchange app where people trade help using time credits instead of money. One credit equals one hour, so the product is meant to feel closer to a local trust network than an anonymous marketplace.
 
-The first version will focus on the core loop:
+The first version (v1) will focus on the core loop:
 
 1. Members create profiles with skills they can offer or want.
 2. People post offers and requests in their area.
@@ -43,13 +43,23 @@ The app starts as a modular monolith with one intentionally separate service: th
 - M4: chat, reviews, and trust signals
 - M5: AI effort estimator and evaluation harness
 
+## Current Status
+
+The repo has the initial database schema and shared domain types in place. The web app, API, and ledger service shells are still next.
+
 ## Local Setup
 
-There is no runnable app yet. This first commit is just the project outline and notes. As the app packages are added, the goal is to keep local setup to:
+There is no runnable app yet. Once the app packages are added, the goal is to keep local setup to:
 
 ```bash
 pnpm install
 pnpm dev
+```
+
+For now, the useful local command is the first migration. It expects a Postgres database with `pgcrypto`, PostGIS, and pgvector available:
+
+```bash
+pnpm db:migrate
 ```
 
 Secrets will live in `.env` files and should not be committed. See `.env.example` for the rough template.

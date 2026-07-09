@@ -1,9 +1,17 @@
 {
-  "name": "timebank",
+  "name": "hourbank",
   "private": true,
   "scripts": {
+    "db:migrate": "psql \"$DATABASE_URL\" -f infra/migrations/0001_core_schema.sql",
     "dev": "echo \"App packages have not been scaffolded yet\"",
     "lint": "echo \"No lint step yet\"",
     "test": "echo \"No tests yet\""
+  },
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "engines": {
+    "node": ">=20"
   }
 }

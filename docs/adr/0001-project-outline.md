@@ -1,7 +1,5 @@
 # ADR 0001: Start with a modular monolith and one ledger service
 
-Status: accepted
-
 ## Context
 
 HourBank needs normal product features like profiles, listings, search, messaging, and reviews. Most of that can move quickly inside one TypeScript API without adding a lot of service overhead.
