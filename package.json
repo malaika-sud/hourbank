@@ -2,7 +2,12 @@
   "name": "hourbank",
   "private": true,
   "scripts": {
-    "db:migrate": "psql \"$DATABASE_URL\" -f infra/migrations/0001_core_schema.sql",
+    "db:up": "docker compose -f infra/docker-compose.yml up -d postgres",
+    "db:down": "docker compose -f infra/docker-compose.yml down",
+    "db:migrate": "sh scripts/db/migrate.sh",
+    "db:seed": "sh scripts/db/seed.sh",
+    "db:reset": "sh scripts/db/reset.sh",
+    "db:check": "sh scripts/db/check.sh",
     "dev": "echo \"App packages have not been scaffolded yet\"",
     "lint": "echo \"No lint step yet\"",
     "test": "echo \"No tests yet\""

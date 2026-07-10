@@ -45,7 +45,7 @@ The app starts as a modular monolith with one intentionally separate service: th
 
 ## Current Status
 
-The repo has the initial database schema and shared domain types in place. The web app, API, and ledger service shells are still next.
+The repo has the initial database schema, shared domain types, and local Postgres setup in place. The web app, API, and ledger service shells are still next.
 
 ## Local Setup
 
@@ -56,10 +56,16 @@ pnpm install
 pnpm dev
 ```
 
-For now, the useful local command is the first migration. It expects a Postgres database with `pgcrypto`, PostGIS, and pgvector available:
+For now, the useful local flow is the database:
 
 ```bash
+cp .env.example .env
+pnpm db:up
 pnpm db:migrate
+pnpm db:seed
+pnpm db:check
 ```
+
+`pnpm db:reset` drops the local compose volume, recreates Postgres, reruns the migration, and loads the seed data.
 
 Secrets will live in `.env` files and should not be committed. See `.env.example` for the rough template.

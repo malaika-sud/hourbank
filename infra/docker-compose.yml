@@ -1,0 +1,23 @@
+name: hourbank
+
+services:
+  postgres:
+    build:
+      context: ./docker/postgres
+    container_name: hourbank-postgres
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-hourbank}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-hourbank}
+      POSTGRES_DB: ${POSTGRES_DB:-hourbank}
+    ports:
+      - "${POSTGRES_PORT:-5432}:5432"
+    volumes:
+      - hourbank-postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-hourbank} -d ${POSTGRES_DB:-hourbank}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  hourbank-postgres-data:
