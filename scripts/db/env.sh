@@ -8,4 +8,4 @@ if [ -f .env ]; then
   set +a
 fi
 
-export DATABASE_URL="${DATABASE_URL:-postgres://hourbank:hourbank@localhost:5432/hourbank}"
+export DATABASE_URL="${DATABASE_URL:-postgres://hourbank:hourbank@localhost:5433/hourbank}"

@@ -45,6 +45,10 @@ export interface UserSkill {
   kind: UserSkillKind;
 }
 
+export interface ProfileDetail extends PublicProfile {
+  skills: UserSkill[];
+}
+
 export interface ListingSummary {
   id: string;
   userId: string;

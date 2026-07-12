@@ -45,7 +45,7 @@ The app starts as a modular monolith with one intentionally separate service: th
 
 ## Current Status
 
-The repo has the initial database schema, shared domain types, and local Postgres setup in place. The web app, API, and ledger service shells are still next.
+The repo has the initial database schema, shared domain types, local Postgres setup, and a small read-only API shell in place. The web app, auth flow, write endpoints, and ledger service are still next.
 
 ## Local Setup
 
@@ -59,13 +59,24 @@ pnpm dev
 For now, the useful local flow is the database:
 
 ```bash
+pnpm install
 cp .env.example .env
 pnpm db:up
 pnpm db:migrate
 pnpm db:seed
 pnpm db:check
+pnpm api:dev
 ```
 
 `pnpm db:reset` drops the local compose volume, recreates Postgres, reruns the migration, and loads the seed data.
+
+The API currently exposes:
+
+- `GET http://localhost:4100/health`
+- `GET http://localhost:4100/health/db`
+- `GET http://localhost:4100/profiles`
+- `GET http://localhost:4100/profiles/:id`
+- `GET http://localhost:4100/listings`
+- `GET http://localhost:4100/listings/:id`
 
 Secrets will live in `.env` files and should not be committed. See `.env.example` for the rough template.
