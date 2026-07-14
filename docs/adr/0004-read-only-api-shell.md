@@ -1,7 +1,5 @@
 # ADR 0004: Start the API with read-only product endpoints
 
-Status: accepted
-
 ## Context
 
 HourBank needs a TypeScript API that eventually owns profiles, listings, trades, messaging, search, and appraisal orchestration. The plan calls for a modular API, but the ledger service and Auth0 flows are still separate pieces of work.

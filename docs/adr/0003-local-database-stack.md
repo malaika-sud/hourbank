@@ -1,7 +1,5 @@
 # ADR 0003: Use Docker Compose for the local database
 
-Status: accepted
-
 ## Context
 
 HourBank needs PostgreSQL plus two extensions from the beginning: PostGIS for neighborhood and distance queries, and pgvector for the later semantic-search path. Installing those directly on every machine would make setup fragile.
