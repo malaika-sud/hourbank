@@ -27,11 +27,11 @@ Built so far:
 - SQL migrations for users, skills, listings, trades, messages, reviews, appraisals, and ledger tables
 - seed data and database smoke-check scripts
 - initial NestJS API with health checks and read-only profile/listing endpoints
+- first Next.js web surface for browsing seed-backed offers, requests, and neighbor profiles
 - Architecture Decision Records in [docs/adr](docs/adr)
 
 Still upcoming:
 
-- Next.js web app
 - Auth0 login and user onboarding
 - write flows for profiles, listings, and trade proposals
 - Go ledger service for credit movement and escrow
@@ -127,6 +127,13 @@ pnpm db:check
 pnpm api:dev
 ```
 
+In another terminal:
+
+```bash
+pnpm web:dev
+```
+
+The web app runs on `http://localhost:3000` by default.
 The API runs on `http://localhost:4100` by default.
 
 Current endpoints:

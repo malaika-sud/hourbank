@@ -11,10 +11,13 @@
     "db:seed": "sh scripts/db/seed.sh",
     "db:reset": "sh scripts/db/reset.sh",
     "db:check": "sh scripts/db/check.sh",
-    "dev": "pnpm api:dev",
+    "dev": "pnpm web:dev",
     "lint": "echo \"No lint step yet\"",
     "test": "echo \"No tests yet\"",
-    "typecheck": "pnpm api:typecheck"
+    "typecheck": "pnpm api:typecheck && pnpm web:typecheck",
+    "web:build": "pnpm --filter @hourbank/web build",
+    "web:dev": "pnpm --filter @hourbank/web dev",
+    "web:typecheck": "pnpm --filter @hourbank/web typecheck"
   },
   "workspaces": [
     "apps/*",
