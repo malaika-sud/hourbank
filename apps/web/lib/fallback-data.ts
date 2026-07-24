@@ -1,4 +1,4 @@
-import type { ListingSummary, PublicProfile } from "@hourbank/shared";
+import type { ListingSummary, ProfileDetail, PublicProfile } from "@hourbank/shared";
 
 export const fallbackListings: ListingSummary[] = [
   {
@@ -39,13 +39,31 @@ export const fallbackListings: ListingSummary[] = [
   },
 ];
 
-export const fallbackProfiles: PublicProfile[] = [
+export const fallbackProfileDetails: ProfileDetail[] = [
   {
     id: "20000000-0000-0000-0000-000000000001",
     displayName: "Maya Chen",
     bio: "Happy to trade tutoring and resume help for practical neighborhood favors.",
     approxArea: "Mission District",
     verificationTier: 1,
+    skills: [
+      {
+        kind: "offer",
+        skill: {
+          id: "10000000-0000-0000-0000-000000000001",
+          name: "Spanish tutoring",
+          category: "Education",
+        },
+      },
+      {
+        kind: "want",
+        skill: {
+          id: "10000000-0000-0000-0000-000000000006",
+          name: "Small repairs",
+          category: "Repair",
+        },
+      },
+    ],
   },
   {
     id: "20000000-0000-0000-0000-000000000002",
@@ -53,6 +71,24 @@ export const fallbackProfiles: PublicProfile[] = [
     bio: "Bike commuter, dog person, and generally useful on weekends.",
     approxArea: "Lower Haight",
     verificationTier: 1,
+    skills: [
+      {
+        kind: "offer",
+        skill: {
+          id: "10000000-0000-0000-0000-000000000002",
+          name: "Bike repair",
+          category: "Repair",
+        },
+      },
+      {
+        kind: "want",
+        skill: {
+          id: "10000000-0000-0000-0000-000000000005",
+          name: "Pet care",
+          category: "Pets",
+        },
+      },
+    ],
   },
   {
     id: "20000000-0000-0000-0000-000000000003",
@@ -60,5 +96,25 @@ export const fallbackProfiles: PublicProfile[] = [
     bio: "Looking for help around the apartment and glad to trade pet care.",
     approxArea: "SoMa",
     verificationTier: 0,
+    skills: [
+      {
+        kind: "offer",
+        skill: {
+          id: "10000000-0000-0000-0000-000000000005",
+          name: "Pet care",
+          category: "Pets",
+        },
+      },
+      {
+        kind: "want",
+        skill: {
+          id: "10000000-0000-0000-0000-000000000003",
+          name: "Moving help",
+          category: "Home",
+        },
+      },
+    ],
   },
 ];
+
+export const fallbackProfiles: PublicProfile[] = fallbackProfileDetails.map(({ skills: _skills, ...profile }) => profile);

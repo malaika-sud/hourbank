@@ -28,6 +28,7 @@ Built so far:
 - seed data and database smoke-check scripts
 - initial NestJS API with health checks and read-only profile/listing endpoints
 - first Next.js web surface for browsing seed-backed offers, requests, and neighbor profiles
+- clickable listing and profile detail pages that use the API when available and seed-backed fallback data otherwise
 - Architecture Decision Records in [docs/adr](docs/adr)
 
 Still upcoming:

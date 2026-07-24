@@ -1,5 +1,7 @@
+import Link from "next/link";
 import type { ListingSummary, PublicProfile } from "@hourbank/shared";
 import { getListings, getProfiles } from "../lib/api";
+import { formatHours, getProfileInitials } from "../lib/format";
 
 const categoryFilters = ["All", "Education", "Repair", "Home", "Pets", "Career"];
 
@@ -7,7 +9,6 @@ export default async function HomePage() {
   const [listings, profiles] = await Promise.all([getListings(), getProfiles()]);
   const offers = listings.filter((listing) => listing.type === "offer");
   const requests = listings.filter((listing) => listing.type === "request");
-  const featuredListing = listings[0];
 
   return (
     <main className="app-shell">
@@ -18,9 +19,9 @@ export default async function HomePage() {
         </div>
 
         <nav className="nav-list" aria-label="Primary">
-          <a className="active" href="#marketplace">Marketplace</a>
-          <a href="#neighbors">Neighbors</a>
-          <a href="#wallet">Wallet</a>
+          <Link className="active" href="/">Marketplace</Link>
+          <a href="/#neighbors">Neighbors</a>
+          <a href="/#wallet">Wallet</a>
         </nav>
 
         <div className="credit-panel" id="wallet">
@@ -70,8 +71,7 @@ export default async function HomePage() {
             </section>
           </div>
 
-          <aside className="detail-column" aria-label="Selected listing details">
-            {featuredListing ? <ListingDetail listing={featuredListing} /> : null}
+          <aside className="detail-column" aria-label="Neighbor profiles">
             <section className="neighbors-panel" id="neighbors">
               <div className="section-heading">
                 <p className="eyebrow">Neighbors</p>
@@ -101,10 +101,10 @@ function StatCard({ label, value }: { label: string; value: string }) {
 
 function ListingCard({ listing }: { listing: ListingSummary }) {
   return (
-    <article className="listing-card">
+    <Link className="listing-card" href={`/listings/${listing.id}`}>
       <div className="listing-card-header">
         <span className={`type-chip ${listing.type}`}>{listing.type}</span>
-        <span>{listing.estHours ?? "TBD"} hr</span>
+        <span>{formatHours(listing.estHours)}</span>
       </div>
       <h3>{listing.title}</h3>
       <p>{listing.description}</p>
@@ -112,52 +112,19 @@ function ListingCard({ listing }: { listing: ListingSummary }) {
         <span>{listing.category}</span>
         <span>{listing.approxArea}</span>
       </div>
-    </article>
-  );
-}
-
-function ListingDetail({ listing }: { listing: ListingSummary }) {
-  return (
-    <section className="detail-panel">
-      <div className="section-heading">
-        <p className="eyebrow">Selected listing</p>
-        <h3>{listing.title}</h3>
-      </div>
-      <p>{listing.description}</p>
-      <dl className="detail-list">
-        <div>
-          <dt>Category</dt>
-          <dd>{listing.category}</dd>
-        </div>
-        <div>
-          <dt>Estimated time</dt>
-          <dd>{listing.estHours ?? "TBD"} hour{listing.estHours === 1 ? "" : "s"}</dd>
-        </div>
-        <div>
-          <dt>Public area</dt>
-          <dd>{listing.approxArea}</dd>
-        </div>
-      </dl>
-      <button className="primary-action" type="button">Propose trade</button>
-    </section>
+    </Link>
   );
 }
 
 function ProfileRow({ profile }: { profile: PublicProfile }) {
-  const initials = profile.displayName
-    .split(" ")
-    .map((part) => part[0])
-    .join("")
-    .slice(0, 2);
-
   return (
-    <article className="profile-row">
-      <div className="avatar" aria-hidden="true">{initials}</div>
+    <Link className="profile-row" href={`/profiles/${profile.id}`}>
+      <div className="avatar" aria-hidden="true">{getProfileInitials(profile)}</div>
       <div>
         <h4>{profile.displayName}</h4>
         <p>{profile.approxArea}</p>
       </div>
       <span>Tier {profile.verificationTier}</span>
-    </article>
+    </Link>
   );
 }
