@@ -1,6 +1,9 @@
 export const listingTypes = ["offer", "request"] as const;
 export type ListingType = (typeof listingTypes)[number];
 
+export const listingCategories = ["Education", "Repair", "Home", "Pets", "Career"] as const;
+export type ListingCategory = (typeof listingCategories)[number];
+
 export const listingStatuses = ["active", "paused", "closed"] as const;
 export type ListingStatus = (typeof listingStatuses)[number];
 
@@ -60,6 +63,16 @@ export interface ListingSummary {
   approxArea: string;
   status: ListingStatus;
   createdAt: string;
+}
+
+export interface CreateListingInput {
+  userId: string;
+  type: ListingType;
+  title: string;
+  description: string;
+  category: ListingCategory;
+  estHours?: number | null;
+  approxArea: string;
 }
 
 export interface TradeSummary {

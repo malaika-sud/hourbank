@@ -162,6 +162,13 @@ a {
   margin-bottom: 22px;
 }
 
+.topbar-actions {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 10px;
+}
+
 .topbar h2 {
   font-size: 34px;
   line-height: 1.08;
@@ -363,6 +370,12 @@ a {
 .primary-action:disabled {
   cursor: not-allowed;
   opacity: 0.68;
+}
+
+.compact-action {
+  width: auto;
+  min-height: 38px;
+  padding: 0 14px;
 }
 
 .profile-list {
@@ -617,6 +630,83 @@ a {
   font-size: 18px;
 }
 
+.listing-form {
+  display: grid;
+  gap: 16px;
+}
+
+.field-row {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.listing-form label,
+.listing-form fieldset {
+  display: grid;
+  gap: 7px;
+  min-width: 0;
+}
+
+.listing-form fieldset {
+  border: 0;
+  margin: 0;
+  padding: 0;
+}
+
+.listing-form label span,
+.listing-form legend {
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.listing-form input,
+.listing-form select,
+.listing-form textarea {
+  width: 100%;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 11px 12px;
+  color: var(--ink);
+  background: var(--panel);
+  font: inherit;
+}
+
+.listing-form textarea {
+  resize: vertical;
+}
+
+.listing-form input:focus,
+.listing-form select:focus,
+.listing-form textarea:focus {
+  border-color: var(--green);
+  outline: 3px solid rgba(47, 111, 94, 0.14);
+}
+
+.input-segmented button {
+  min-height: 42px;
+}
+
+.form-note,
+.form-error {
+  margin: 0;
+  border-radius: 8px;
+  padding: 11px 12px;
+  font-size: 14px;
+  line-height: 1.45;
+}
+
+.form-note {
+  color: var(--muted);
+  background: var(--panel-strong);
+}
+
+.form-error {
+  color: #7c2d2d;
+  background: #f8dddd;
+}
+
 @media (max-width: 980px) {
   .app-shell {
     grid-template-columns: 1fr;
@@ -655,6 +745,10 @@ a {
     display: grid;
   }
 
+  .topbar-actions {
+    flex-wrap: wrap;
+  }
+
   .topbar h2 {
     font-size: 28px;
   }
@@ -671,7 +765,8 @@ a {
   .detail-hero,
   .profile-hero,
   .proposal-preview,
-  .skill-grid {
+  .skill-grid,
+  .field-row {
     grid-template-columns: 1fr;
   }
 

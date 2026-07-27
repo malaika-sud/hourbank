@@ -29,12 +29,13 @@ Built so far:
 - initial NestJS API with health checks and read-only profile/listing endpoints
 - first Next.js web surface for browsing seed-backed offers, requests, and neighbor profiles
 - clickable listing and profile detail pages that use the API when available and seed-backed fallback data otherwise
+- basic listing creation flow with a demo profile selector until Auth0 is added
 - Architecture Decision Records in [docs/adr](docs/adr)
 
 Still upcoming:
 
 - Auth0 login and user onboarding
-- write flows for profiles, listings, and trade proposals
+- write flows for profiles and trade proposals
 - Go ledger service for credit movement and escrow
 - PostGIS map discovery
 - AI effort estimator with an evaluation harness
@@ -145,6 +146,7 @@ Current endpoints:
 - `GET /profiles/:id`
 - `GET /listings`
 - `GET /listings/:id`
+- `POST /listings`
 
 `pnpm db:reset` drops the local Docker volume, recreates Postgres, reruns the migration, and loads the seed data.
 
