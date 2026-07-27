@@ -1,8 +1,11 @@
 import { BadRequestException, Inject, Injectable, NotFoundException } from "@nestjs/common";
 import {
+  type CreateListingInput,
+  type ListingCategory,
   type ListingStatus,
   type ListingSummary,
   type ListingType,
+  listingCategories,
   listingStatuses,
   listingTypes,
 } from "@hourbank/shared";
@@ -56,6 +59,64 @@ export class ListingsService {
     );
 
     return result.rows.map(toListingSummary);
+  }
+
+  async create(body: unknown): Promise<ListingSummary> {
+    const input = parseCreateListingInput(body);
+
+    const result = await this.database.query<ListingRow>(
+      `
+        INSERT INTO listings (
+          user_id,
+          type,
+          title,
+          description,
+          category,
+          est_hours,
+          location,
+          approx_area
+        )
+        SELECT
+          users.id,
+          $2::listing_type,
+          $3,
+          $4,
+          $5,
+          $6,
+          users.home_location,
+          $7
+        FROM users
+        WHERE users.id = $1
+        RETURNING
+          id::text,
+          user_id::text AS "userId",
+          type::text AS type,
+          title,
+          description,
+          category,
+          est_hours AS "estHours",
+          approx_area AS "approxArea",
+          status::text AS status,
+          created_at AS "createdAt"
+      `,
+      [
+        input.userId,
+        input.type,
+        input.title,
+        input.description,
+        input.category,
+        input.estHours ?? null,
+        input.approxArea,
+      ],
+    );
+
+    const listing = result.rows[0];
+
+    if (!listing) {
+      throw new NotFoundException("Profile not found");
+    }
+
+    return toListingSummary(listing);
   }
 
   async findById(id: string): Promise<ListingSummary> {
@@ -119,6 +180,74 @@ export class ListingsService {
 
     throw new BadRequestException("Listing status is not supported");
   }
+}
+
+function parseCreateListingInput(body: unknown): CreateListingInput {
+  if (!isRecord(body)) {
+    throw new BadRequestException("Request body is required");
+  }
+
+  return {
+    userId: parseRequiredText(body.userId, "userId", 80),
+    type: parseTypeValue(body.type),
+    title: parseRequiredText(body.title, "title", 120),
+    description: parseRequiredText(body.description, "description", 800),
+    category: parseCategoryValue(body.category),
+    estHours: parseEstimatedHours(body.estHours),
+    approxArea: parseRequiredText(body.approxArea, "approxArea", 80),
+  };
+}
+
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return typeof value === "object" && value !== null && !Array.isArray(value);
+}
+
+function parseRequiredText(value: unknown, field: string, maxLength: number): string {
+  if (typeof value !== "string") {
+    throw new BadRequestException(`${field} is required`);
+  }
+
+  const trimmed = value.trim();
+
+  if (!trimmed) {
+    throw new BadRequestException(`${field} is required`);
+  }
+
+  if (trimmed.length > maxLength) {
+    throw new BadRequestException(`${field} must be ${maxLength} characters or fewer`);
+  }
+
+  return trimmed;
+}
+
+function parseTypeValue(value: unknown): ListingType {
+  if (typeof value === "string" && listingTypes.includes(value as ListingType)) {
+    return value as ListingType;
+  }
+
+  throw new BadRequestException("Listing type must be offer or request");
+}
+
+function parseCategoryValue(value: unknown): ListingCategory {
+  if (typeof value === "string" && listingCategories.includes(value as ListingCategory)) {
+    return value as ListingCategory;
+  }
+
+  throw new BadRequestException("Listing category is not supported");
+}
+
+function parseEstimatedHours(value: unknown): number | null {
+  if (value === undefined || value === null || value === "") {
+    return null;
+  }
+
+  const hours = typeof value === "number" ? value : Number(value);
+
+  if (!Number.isFinite(hours) || hours <= 0 || hours > 24) {
+    throw new BadRequestException("Estimated hours must be between 0 and 24");
+  }
+
+  return Math.round(hours * 100) / 100;
 }
 
 function toListingSummary(row: ListingRow): ListingSummary {

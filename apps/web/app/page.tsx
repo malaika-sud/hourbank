@@ -1,12 +1,16 @@
 import Link from "next/link";
 import type { ListingSummary, PublicProfile } from "@hourbank/shared";
+import { listingCategories } from "@hourbank/shared/domain";
 import { getListings, getProfiles } from "../lib/api";
 import { formatHours, getProfileInitials } from "../lib/format";
 
-const categoryFilters = ["All", "Education", "Repair", "Home", "Pets", "Career"];
+const categoryFilters = ["All", ...listingCategories];
 
 export default async function HomePage() {
-  const [listings, profiles] = await Promise.all([getListings(), getProfiles()]);
+  const [listings, profiles] = await Promise.all([
+    getListings(),
+    getProfiles(),
+  ]);
   const offers = listings.filter((listing) => listing.type === "offer");
   const requests = listings.filter((listing) => listing.type === "request");
 
@@ -19,7 +23,9 @@ export default async function HomePage() {
         </div>
 
         <nav className="nav-list" aria-label="Primary">
-          <Link className="active" href="/">Marketplace</Link>
+          <Link className="active" href="/">
+            Marketplace
+          </Link>
           <a href="/#neighbors">Neighbors</a>
           <a href="/#wallet">Wallet</a>
         </nav>
@@ -27,7 +33,6 @@ export default async function HomePage() {
         <div className="credit-panel" id="wallet">
           <span>Current model</span>
           <strong>1 hour = 1 credit</strong>
-          <p>Escrow and ledger-backed settlement are planned for the trade loop.</p>
         </div>
       </aside>
 
@@ -37,11 +42,22 @@ export default async function HomePage() {
             <p className="eyebrow">Mission District beta area</p>
             <h2>Discover nearby offers and requests</h2>
           </div>
-          <div className="status-pill">API-backed prototype</div>
+          <div className="topbar-actions">
+            <div className="status-pill">API-backed prototype</div>
+            <Link
+              className="primary-action compact-action"
+              href="/listings/new"
+            >
+              Post listing
+            </Link>
+          </div>
         </header>
 
         <section className="stats-grid" aria-label="Marketplace summary">
-          <StatCard label="Active listings" value={listings.length.toString()} />
+          <StatCard
+            label="Active listings"
+            value={listings.length.toString()}
+          />
           <StatCard label="Offers" value={offers.length.toString()} />
           <StatCard label="Requests" value={requests.length.toString()} />
           <StatCard label="Neighbors" value={profiles.length.toString()} />
@@ -51,7 +67,9 @@ export default async function HomePage() {
           <div className="main-column">
             <section className="toolbar" aria-label="Listing filters">
               <div className="segmented-control">
-                <button className="selected" type="button">All</button>
+                <button className="selected" type="button">
+                  All
+                </button>
                 <button type="button">Offers</button>
                 <button type="button">Requests</button>
               </div>
@@ -64,7 +82,11 @@ export default async function HomePage() {
               </div>
             </section>
 
-            <section className="listing-grid" id="marketplace" aria-label="Listings">
+            <section
+              className="listing-grid"
+              id="marketplace"
+              aria-label="Listings"
+            >
               {listings.map((listing) => (
                 <ListingCard key={listing.id} listing={listing} />
               ))}
@@ -119,7 +141,9 @@ function ListingCard({ listing }: { listing: ListingSummary }) {
 function ProfileRow({ profile }: { profile: PublicProfile }) {
   return (
     <Link className="profile-row" href={`/profiles/${profile.id}`}>
-      <div className="avatar" aria-hidden="true">{getProfileInitials(profile)}</div>
+      <div className="avatar" aria-hidden="true">
+        {getProfileInitials(profile)}
+      </div>
       <div>
         <h4>{profile.displayName}</h4>
         <p>{profile.approxArea}</p>
