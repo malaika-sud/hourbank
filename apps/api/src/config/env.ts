@@ -25,7 +25,7 @@ export function getApiConfig(): ApiConfig {
 
   cachedConfig = {
     port,
-    corsOrigin: process.env.CORS_ORIGIN ?? "http://localhost:3000",
+    corsOrigin: process.env.CORS_ORIGIN ?? "http://localhost:3001",
     databaseUrl: process.env.DATABASE_URL ?? "postgres://hourbank:hourbank@localhost:5433/hourbank",
   };
 

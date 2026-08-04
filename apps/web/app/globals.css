@@ -242,8 +242,12 @@ a {
 }
 
 .segmented-control button,
-.category-row button {
+.segmented-control a,
+.category-row button,
+.category-row a {
+  display: grid;
   min-height: 36px;
+  place-items: center;
   border-radius: 8px;
   padding: 0 12px;
   color: var(--muted);
@@ -251,7 +255,14 @@ a {
 }
 
 .segmented-control button.selected,
+.segmented-control a.selected,
+.category-row a.selected,
 .category-row button:hover {
+  color: #fffdf8;
+  background: var(--green);
+}
+
+.category-row a:hover {
   color: #fffdf8;
   background: var(--green);
 }
@@ -310,6 +321,37 @@ a {
   margin: 10px 0 0;
   color: var(--muted);
   line-height: 1.55;
+}
+
+.empty-listing-state {
+  grid-column: 1 / -1;
+  border: 1px dashed var(--line);
+  border-radius: 8px;
+  padding: 24px;
+  background: rgba(255, 253, 248, 0.62);
+}
+
+.empty-listing-state h3 {
+  margin: 0;
+  font-size: 20px;
+}
+
+.empty-listing-state p {
+  margin: 8px 0 0;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+.empty-listing-state a {
+  display: inline-grid;
+  min-height: 36px;
+  place-items: center;
+  margin-top: 16px;
+  border-radius: 8px;
+  padding: 0 12px;
+  color: var(--green);
+  background: var(--green-soft);
+  font-weight: 800;
 }
 
 .listing-meta {
