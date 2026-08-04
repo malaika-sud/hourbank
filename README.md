@@ -30,6 +30,7 @@ Built so far:
 - first Next.js web surface for browsing seed-backed offers, requests, and neighbor profiles
 - clickable listing and profile detail pages that use the API when available and seed-backed fallback data otherwise
 - basic listing creation flow with a demo profile selector until Auth0 is added
+- working marketplace filters for offer/request mode and listing category
 - Architecture Decision Records in [docs/adr](docs/adr)
 
 Still upcoming:
@@ -135,7 +136,7 @@ In another terminal:
 pnpm web:dev
 ```
 
-The web app runs on `http://localhost:3000` by default.
+The web app runs on `http://localhost:3001` by default.
 The API runs on `http://localhost:4100` by default.
 
 Current endpoints:
@@ -145,6 +146,7 @@ Current endpoints:
 - `GET /profiles`
 - `GET /profiles/:id`
 - `GET /listings`
+- `GET /listings?type=offer&category=Education`
 - `GET /listings/:id`
 - `POST /listings`
 

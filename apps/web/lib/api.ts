@@ -1,10 +1,15 @@
-import type { ListingSummary, ProfileDetail, PublicProfile } from "@hourbank/shared";
+import type { ListingCategory, ListingSummary, ListingType, ProfileDetail, PublicProfile } from "@hourbank/shared";
 import { fallbackListings, fallbackProfileDetails, fallbackProfiles } from "./fallback-data";
 
 const apiBaseUrl = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:4100";
 
-export async function getListings(): Promise<ListingSummary[]> {
-  return getJson<ListingSummary[]>("/listings", fallbackListings);
+export interface ListingFilters {
+  type?: ListingType;
+  category?: ListingCategory;
+}
+
+export async function getListings(filters: ListingFilters = {}): Promise<ListingSummary[]> {
+  return getJson<ListingSummary[]>(buildListingsPath(filters), filterFallbackListings(filters));
 }
 
 export async function getListing(id: string): Promise<ListingSummary | null> {
@@ -37,4 +42,28 @@ async function getJson<T>(path: string, fallback: T): Promise<T> {
   } catch {
     return fallback;
   }
+}
+
+function buildListingsPath(filters: ListingFilters): string {
+  const params = new URLSearchParams();
+
+  if (filters.type) {
+    params.set("type", filters.type);
+  }
+
+  if (filters.category) {
+    params.set("category", filters.category);
+  }
+
+  const query = params.toString();
+  return query ? `/listings?${query}` : "/listings";
+}
+
+function filterFallbackListings(filters: ListingFilters): ListingSummary[] {
+  return fallbackListings.filter((listing) => {
+    const matchesType = filters.type ? listing.type === filters.type : true;
+    const matchesCategory = filters.category ? listing.category === filters.category : true;
+
+    return matchesType && matchesCategory;
+  });
 }

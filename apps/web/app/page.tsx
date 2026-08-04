@@ -1,18 +1,35 @@
 import Link from "next/link";
-import type { ListingSummary, PublicProfile } from "@hourbank/shared";
-import { listingCategories } from "@hourbank/shared/domain";
+import type { ListingCategory, ListingSummary, ListingType, PublicProfile } from "@hourbank/shared";
+import { listingCategories, listingTypes } from "@hourbank/shared/domain";
 import { getListings, getProfiles } from "../lib/api";
 import { formatHours, getProfileInitials } from "../lib/format";
 
-const categoryFilters = ["All", ...listingCategories];
+const categoryFilters: Array<ListingCategory | "All"> = ["All", ...listingCategories];
 
-export default async function HomePage() {
-  const [listings, profiles] = await Promise.all([
+interface HomePageProps {
+  searchParams?: Promise<{
+    category?: string;
+    type?: string;
+  }>;
+}
+
+export default async function HomePage({ searchParams }: HomePageProps) {
+  const params = await searchParams;
+  const selectedType = parseListingType(params?.type);
+  const selectedCategory = parseListingCategory(params?.category);
+  const activeFilters = {
+    type: selectedType,
+    category: selectedCategory,
+  };
+
+  const [listings, allListings, profiles] = await Promise.all([
+    getListings(activeFilters),
     getListings(),
     getProfiles(),
   ]);
-  const offers = listings.filter((listing) => listing.type === "offer");
-  const requests = listings.filter((listing) => listing.type === "request");
+  const offers = allListings.filter((listing) => listing.type === "offer");
+  const requests = allListings.filter((listing) => listing.type === "request");
+  const hasActiveFilters = Boolean(selectedType || selectedCategory);
 
   return (
     <main className="app-shell">
@@ -56,7 +73,7 @@ export default async function HomePage() {
         <section className="stats-grid" aria-label="Marketplace summary">
           <StatCard
             label="Active listings"
-            value={listings.length.toString()}
+            value={allListings.length.toString()}
           />
           <StatCard label="Offers" value={offers.length.toString()} />
           <StatCard label="Requests" value={requests.length.toString()} />
@@ -67,17 +84,37 @@ export default async function HomePage() {
           <div className="main-column">
             <section className="toolbar" aria-label="Listing filters">
               <div className="segmented-control">
-                <button className="selected" type="button">
+                <FilterLink
+                  category={selectedCategory}
+                  className={!selectedType ? "selected" : ""}
+                >
                   All
-                </button>
-                <button type="button">Offers</button>
-                <button type="button">Requests</button>
+                </FilterLink>
+                <FilterLink
+                  category={selectedCategory}
+                  className={selectedType === "offer" ? "selected" : ""}
+                  type="offer"
+                >
+                  Offers
+                </FilterLink>
+                <FilterLink
+                  category={selectedCategory}
+                  className={selectedType === "request" ? "selected" : ""}
+                  type="request"
+                >
+                  Requests
+                </FilterLink>
               </div>
               <div className="category-row">
                 {categoryFilters.map((category) => (
-                  <button key={category} type="button">
+                  <FilterLink
+                    className={category === (selectedCategory ?? "All") ? "selected" : ""}
+                    key={category}
+                    type={selectedType}
+                    category={category === "All" ? undefined : category}
+                  >
                     {category}
-                  </button>
+                  </FilterLink>
                 ))}
               </div>
             </section>
@@ -87,9 +124,17 @@ export default async function HomePage() {
               id="marketplace"
               aria-label="Listings"
             >
-              {listings.map((listing) => (
-                <ListingCard key={listing.id} listing={listing} />
-              ))}
+              {listings.length > 0 ? (
+                listings.map((listing) => (
+                  <ListingCard key={listing.id} listing={listing} />
+                ))
+              ) : (
+                <div className="empty-listing-state">
+                  <h3>No listings match these filters</h3>
+                  <p>Try a different category or switch between offers and requests.</p>
+                  {hasActiveFilters ? <Link href="/">Clear filters</Link> : null}
+                </div>
+              )}
             </section>
           </div>
 
@@ -110,6 +155,47 @@ export default async function HomePage() {
       </section>
     </main>
   );
+}
+
+function parseListingType(value?: string): ListingType | undefined {
+  return value && listingTypes.includes(value as ListingType) ? (value as ListingType) : undefined;
+}
+
+function parseListingCategory(value?: string): ListingCategory | undefined {
+  return value && listingCategories.includes(value as ListingCategory) ? (value as ListingCategory) : undefined;
+}
+
+function FilterLink({
+  category,
+  children,
+  className,
+  type,
+}: {
+  category?: ListingCategory;
+  children: React.ReactNode;
+  className?: string;
+  type?: ListingType;
+}) {
+  return (
+    <Link className={className} href={buildMarketplaceHref({ category, type })}>
+      {children}
+    </Link>
+  );
+}
+
+function buildMarketplaceHref(filters: { category?: ListingCategory; type?: ListingType }) {
+  const params = new URLSearchParams();
+
+  if (filters.type) {
+    params.set("type", filters.type);
+  }
+
+  if (filters.category) {
+    params.set("category", filters.category);
+  }
+
+  const query = params.toString();
+  return query ? `/?${query}#marketplace` : "/#marketplace";
 }
 
 function StatCard({ label, value }: { label: string; value: string }) {
