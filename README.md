@@ -31,12 +31,13 @@ Built so far:
 - clickable listing and profile detail pages that use the API when available and seed-backed fallback data otherwise
 - basic listing creation flow with a demo profile selector until Auth0 is added
 - working marketplace filters for offer/request mode and listing category
+- profile editing flow for public profile details and offered/wanted skills
 - Architecture Decision Records in [docs/adr](docs/adr)
 
 Still upcoming:
 
 - Auth0 login and user onboarding
-- write flows for profiles and trade proposals
+- trade proposals and acceptance flow
 - Go ledger service for credit movement and escrow
 - PostGIS map discovery
 - AI effort estimator with an evaluation harness
@@ -82,11 +83,11 @@ Later, the AI appraiser may be extracted into a small Python/DSPy service once t
 
 | Layer            | Choice                                       |
 | ---------------- | -------------------------------------------- |
+| Web              | Next.js, React                               |
 | API              | NestJS, TypeScript                           |
 | Shared contracts | TypeScript package in `packages/shared`      |
 | Database         | PostgreSQL, PostGIS, pgvector                |
 | Local dev        | Docker Compose, pnpm workspaces              |
-| Planned web      | Next.js, Tailwind, shadcn/ui, TanStack Query |
 | Planned ledger   | Go, chi, pgx, sqlc                           |
 | Planned maps     | MapLibre, OpenStreetMap                      |
 | Planned auth     | Auth0                                        |
@@ -145,6 +146,8 @@ Current endpoints:
 - `GET /health/db`
 - `GET /profiles`
 - `GET /profiles/:id`
+- `PATCH /profiles/:id`
+- `GET /skills`
 - `GET /listings`
 - `GET /listings?type=offer&category=Education`
 - `GET /listings/:id`

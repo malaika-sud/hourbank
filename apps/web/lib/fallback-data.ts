@@ -1,4 +1,32 @@
-import type { ListingSummary, ProfileDetail, PublicProfile } from "@hourbank/shared";
+import type { ListingSummary, ProfileDetail, PublicProfile, Skill } from "@hourbank/shared";
+
+export const fallbackSkills: Skill[] = [
+  {
+    id: "10000000-0000-0000-0000-000000000001",
+    name: "Spanish tutoring",
+    category: "Education",
+  },
+  {
+    id: "10000000-0000-0000-0000-000000000002",
+    name: "Moving help",
+    category: "Home",
+  },
+  {
+    id: "10000000-0000-0000-0000-000000000003",
+    name: "Bike repair",
+    category: "Repair",
+  },
+  {
+    id: "10000000-0000-0000-0000-000000000004",
+    name: "Dog walking",
+    category: "Pets",
+  },
+  {
+    id: "10000000-0000-0000-0000-000000000005",
+    name: "Resume review",
+    category: "Career",
+  },
+];
 
 export const fallbackListings: ListingSummary[] = [
   {
@@ -56,11 +84,19 @@ export const fallbackProfileDetails: ProfileDetail[] = [
         },
       },
       {
+        kind: "offer",
+        skill: {
+          id: "10000000-0000-0000-0000-000000000005",
+          name: "Resume review",
+          category: "Career",
+        },
+      },
+      {
         kind: "want",
         skill: {
-          id: "10000000-0000-0000-0000-000000000006",
-          name: "Small repairs",
-          category: "Repair",
+          id: "10000000-0000-0000-0000-000000000002",
+          name: "Moving help",
+          category: "Home",
         },
       },
     ],
@@ -75,7 +111,7 @@ export const fallbackProfileDetails: ProfileDetail[] = [
       {
         kind: "offer",
         skill: {
-          id: "10000000-0000-0000-0000-000000000002",
+          id: "10000000-0000-0000-0000-000000000003",
           name: "Bike repair",
           category: "Repair",
         },
@@ -83,8 +119,8 @@ export const fallbackProfileDetails: ProfileDetail[] = [
       {
         kind: "want",
         skill: {
-          id: "10000000-0000-0000-0000-000000000005",
-          name: "Pet care",
+          id: "10000000-0000-0000-0000-000000000004",
+          name: "Dog walking",
           category: "Pets",
         },
       },
@@ -100,8 +136,8 @@ export const fallbackProfileDetails: ProfileDetail[] = [
       {
         kind: "offer",
         skill: {
-          id: "10000000-0000-0000-0000-000000000005",
-          name: "Pet care",
+          id: "10000000-0000-0000-0000-000000000004",
+          name: "Dog walking",
           category: "Pets",
         },
       },
@@ -109,8 +145,8 @@ export const fallbackProfileDetails: ProfileDetail[] = [
         kind: "want",
         skill: {
           id: "10000000-0000-0000-0000-000000000003",
-          name: "Moving help",
-          category: "Home",
+          name: "Bike repair",
+          category: "Repair",
         },
       },
     ],

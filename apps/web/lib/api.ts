@@ -1,5 +1,5 @@
-import type { ListingCategory, ListingSummary, ListingType, ProfileDetail, PublicProfile } from "@hourbank/shared";
-import { fallbackListings, fallbackProfileDetails, fallbackProfiles } from "./fallback-data";
+import type { ListingCategory, ListingSummary, ListingType, ProfileDetail, PublicProfile, Skill } from "@hourbank/shared";
+import { fallbackListings, fallbackProfileDetails, fallbackProfiles, fallbackSkills } from "./fallback-data";
 
 const apiBaseUrl = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:4100";
 
@@ -20,6 +20,10 @@ export async function getListing(id: string): Promise<ListingSummary | null> {
 
 export async function getProfiles(): Promise<PublicProfile[]> {
   return getJson<PublicProfile[]>("/profiles", fallbackProfiles);
+}
+
+export async function getSkills(): Promise<Skill[]> {
+  return getJson<Skill[]>("/skills", fallbackSkills);
 }
 
 export async function getProfile(id: string): Promise<ProfileDetail | null> {

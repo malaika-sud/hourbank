@@ -73,7 +73,8 @@ a {
 .listing-card h3,
 .profile-row h4,
 .profile-detail-heading h3,
-.skill-group h4 {
+.skill-group h4,
+.skill-category-list h4 {
   margin: 0;
   letter-spacing: 0;
 }
@@ -533,6 +534,12 @@ a {
   background: var(--panel);
 }
 
+.hero-actions {
+  display: grid;
+  min-width: 180px;
+  gap: 10px;
+}
+
 .hero-metric span {
   color: var(--muted);
   font-size: 13px;
@@ -672,7 +679,8 @@ a {
   font-size: 18px;
 }
 
-.listing-form {
+.listing-form,
+.profile-form {
   display: grid;
   gap: 16px;
 }
@@ -684,20 +692,25 @@ a {
 }
 
 .listing-form label,
-.listing-form fieldset {
+.listing-form fieldset,
+.profile-form label,
+.profile-form fieldset {
   display: grid;
   gap: 7px;
   min-width: 0;
 }
 
-.listing-form fieldset {
+.listing-form fieldset,
+.profile-form fieldset {
   border: 0;
   margin: 0;
   padding: 0;
 }
 
 .listing-form label span,
-.listing-form legend {
+.listing-form legend,
+.profile-form label span,
+.profile-form legend {
   color: var(--muted);
   font-size: 13px;
   font-weight: 800;
@@ -705,7 +718,10 @@ a {
 
 .listing-form input,
 .listing-form select,
-.listing-form textarea {
+.listing-form textarea,
+.profile-form input,
+.profile-form select,
+.profile-form textarea {
   width: 100%;
   border: 1px solid var(--line);
   border-radius: 8px;
@@ -715,19 +731,80 @@ a {
   font: inherit;
 }
 
-.listing-form textarea {
+.listing-form textarea,
+.profile-form textarea {
   resize: vertical;
 }
 
 .listing-form input:focus,
 .listing-form select:focus,
-.listing-form textarea:focus {
+.listing-form textarea:focus,
+.profile-form input:focus,
+.profile-form select:focus,
+.profile-form textarea:focus {
   border-color: var(--green);
   outline: 3px solid rgba(47, 111, 94, 0.14);
 }
 
 .input-segmented button {
   min-height: 42px;
+}
+
+.skill-edit-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.profile-form .skill-edit-section {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 14px;
+  background: var(--panel);
+}
+
+.skill-category-list {
+  display: grid;
+  gap: 14px;
+}
+
+.skill-category-list h4 {
+  color: var(--ink);
+  font-size: 15px;
+}
+
+.skill-check-list {
+  display: grid;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.profile-form .skill-check {
+  grid-template-columns: 18px minmax(0, 1fr);
+  align-items: center;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 9px 10px;
+  background: var(--panel-strong);
+}
+
+.profile-form .skill-check:hover {
+  border-color: rgba(47, 111, 94, 0.42);
+}
+
+.profile-form .skill-check input {
+  width: 16px;
+  height: 16px;
+  border: 0;
+  padding: 0;
+  accent-color: var(--green);
+  background: transparent;
+}
+
+.profile-form .skill-check span {
+  color: var(--ink);
+  font-size: 14px;
+  font-weight: 700;
 }
 
 .form-note,
@@ -808,6 +885,7 @@ a {
   .profile-hero,
   .proposal-preview,
   .skill-grid,
+  .skill-edit-grid,
   .field-row {
     grid-template-columns: 1fr;
   }
@@ -817,7 +895,8 @@ a {
     font-size: 30px;
   }
 
-  .hero-metric {
+  .hero-metric,
+  .hero-actions {
     min-width: 0;
   }
 }

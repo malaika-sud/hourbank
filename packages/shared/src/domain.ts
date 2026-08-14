@@ -52,6 +52,14 @@ export interface ProfileDetail extends PublicProfile {
   skills: UserSkill[];
 }
 
+export interface UpdateProfileInput {
+  displayName: string;
+  bio?: string | null;
+  approxArea: string;
+  offeredSkillIds: string[];
+  wantedSkillIds: string[];
+}
+
 export interface ListingSummary {
   id: string;
   userId: string;
