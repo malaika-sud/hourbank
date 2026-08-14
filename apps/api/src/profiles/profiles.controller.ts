@@ -1,4 +1,4 @@
-import { Controller, Get, Inject, Param } from "@nestjs/common";
+import { Body, Controller, Get, Inject, Param, Patch } from "@nestjs/common";
 import { ProfilesService } from "./profiles.service.js";
 
 @Controller("profiles")
@@ -13,5 +13,10 @@ export class ProfilesController {
   @Get(":id")
   findById(@Param("id") id: string) {
     return this.profilesService.findById(id);
+  }
+
+  @Patch(":id")
+  update(@Param("id") id: string, @Body() body: unknown) {
+    return this.profilesService.update(id, body);
   }
 }

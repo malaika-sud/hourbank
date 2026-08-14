@@ -61,9 +61,14 @@ export default async function ProfilePage({ params }: ProfilePageProps) {
             <h2>{profile.displayName}</h2>
             <p>{profile.bio ?? "This neighbor has not added a bio yet."}</p>
           </div>
-          <div className="hero-metric">
-            <span>Verification</span>
-            <strong>Tier {profile.verificationTier}</strong>
+          <div className="hero-actions">
+            <div className="hero-metric">
+              <span>Verification</span>
+              <strong>Tier {profile.verificationTier}</strong>
+            </div>
+            <Link className="primary-action compact-action" href={`/profiles/${profile.id}/edit`}>
+              Edit profile
+            </Link>
           </div>
         </header>
 
