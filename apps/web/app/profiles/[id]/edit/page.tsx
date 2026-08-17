@@ -35,6 +35,7 @@ export default async function EditProfilePage({ params }: EditProfilePageProps) 
 
         <nav className="nav-list" aria-label="Primary">
           <Link href="/">Marketplace</Link>
+          <Link href="/trades">Trades</Link>
           <a href="/#neighbors">Neighbors</a>
           <a href="/#wallet">Wallet</a>
         </nav>

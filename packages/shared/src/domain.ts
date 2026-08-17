@@ -96,6 +96,21 @@ export interface TradeSummary {
   updatedAt: string;
 }
 
+export interface TradeListingSnapshot {
+  id: string;
+  type: ListingType;
+  title: string;
+  category: string;
+  approxArea: string;
+  estHours?: number | null;
+}
+
+export interface TradeDetail extends TradeSummary {
+  listing: TradeListingSnapshot;
+  requester: PublicProfile;
+  provider: PublicProfile;
+}
+
 export interface LedgerTransactionSummary {
   id: string;
   kind: LedgerTransactionKind;

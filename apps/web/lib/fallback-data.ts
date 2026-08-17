@@ -1,4 +1,4 @@
-import type { ListingSummary, ProfileDetail, PublicProfile, Skill } from "@hourbank/shared";
+import type { ListingSummary, ProfileDetail, PublicProfile, Skill, TradeDetail } from "@hourbank/shared";
 
 export const fallbackSkills: Skill[] = [
   {
@@ -154,3 +154,50 @@ export const fallbackProfileDetails: ProfileDetail[] = [
 ];
 
 export const fallbackProfiles: PublicProfile[] = fallbackProfileDetails.map(({ skills: _skills, ...profile }) => profile);
+
+export const fallbackTrades: TradeDetail[] = [
+  {
+    id: "60000000-0000-0000-0000-000000000001",
+    listingId: "30000000-0000-0000-0000-000000000001",
+    requesterId: "20000000-0000-0000-0000-000000000002",
+    providerId: "20000000-0000-0000-0000-000000000001",
+    agreedHours: 1.5,
+    creditMultiplier: 1,
+    agreedCredits: 1.5,
+    status: "proposed",
+    createdAt: "2026-07-12T00:03:21.531Z",
+    updatedAt: "2026-07-12T00:03:21.531Z",
+    listing: {
+      id: "30000000-0000-0000-0000-000000000001",
+      type: "offer",
+      title: "Spanish tutoring for beginners",
+      category: "Education",
+      approxArea: "Mission District",
+      estHours: 1.5,
+    },
+    requester: fallbackProfiles[1],
+    provider: fallbackProfiles[0],
+  },
+  {
+    id: "60000000-0000-0000-0000-000000000002",
+    listingId: "30000000-0000-0000-0000-000000000003",
+    requesterId: "20000000-0000-0000-0000-000000000003",
+    providerId: "20000000-0000-0000-0000-000000000002",
+    agreedHours: 1,
+    creditMultiplier: 1,
+    agreedCredits: 1,
+    status: "accepted",
+    createdAt: "2026-07-12T00:03:21.531Z",
+    updatedAt: "2026-07-12T00:03:21.531Z",
+    listing: {
+      id: "30000000-0000-0000-0000-000000000003",
+      type: "request",
+      title: "Help moving a small bookcase",
+      category: "Home",
+      approxArea: "SoMa",
+      estHours: 1,
+    },
+    requester: fallbackProfiles[2],
+    provider: fallbackProfiles[1],
+  },
+];

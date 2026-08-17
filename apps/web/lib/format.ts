@@ -1,6 +1,6 @@
-import type { ListingSummary, PublicProfile } from "@hourbank/shared";
+import type { PublicProfile } from "@hourbank/shared";
 
-export function formatHours(hours: ListingSummary["estHours"]): string {
+export function formatHours(hours: number | null | undefined): string {
   if (hours === null || hours === undefined) {
     return "Time TBD";
   }
@@ -17,6 +17,6 @@ export function getProfileInitials(profile: Pick<PublicProfile, "displayName">):
     .toUpperCase();
 }
 
-export function titleCaseListingType(type: ListingSummary["type"]): string {
+export function titleCaseListingType(type: "offer" | "request"): string {
   return type === "offer" ? "Offer" : "Request";
 }

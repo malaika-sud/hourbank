@@ -121,6 +121,43 @@ SET
   approx_area = EXCLUDED.approx_area,
   status = 'active';
 
+INSERT INTO trades (
+  id,
+  listing_id,
+  requester_id,
+  provider_id,
+  agreed_hours,
+  credit_multiplier,
+  status
+)
+VALUES
+  (
+    '60000000-0000-0000-0000-000000000001',
+    '30000000-0000-0000-0000-000000000001',
+    '20000000-0000-0000-0000-000000000002',
+    '20000000-0000-0000-0000-000000000001',
+    1.50,
+    1.00,
+    'proposed'
+  ),
+  (
+    '60000000-0000-0000-0000-000000000002',
+    '30000000-0000-0000-0000-000000000003',
+    '20000000-0000-0000-0000-000000000003',
+    '20000000-0000-0000-0000-000000000002',
+    1.00,
+    1.00,
+    'accepted'
+  )
+ON CONFLICT (id) DO UPDATE
+SET
+  listing_id = EXCLUDED.listing_id,
+  requester_id = EXCLUDED.requester_id,
+  provider_id = EXCLUDED.provider_id,
+  agreed_hours = EXCLUDED.agreed_hours,
+  credit_multiplier = EXCLUDED.credit_multiplier,
+  status = EXCLUDED.status;
+
 INSERT INTO ledger_accounts (id, owner_type, owner_ref, kind)
 VALUES
   ('40000000-0000-0000-0000-000000000001', 'system', 'mint', 'source'),

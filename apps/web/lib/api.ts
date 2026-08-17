@@ -1,5 +1,13 @@
-import type { ListingCategory, ListingSummary, ListingType, ProfileDetail, PublicProfile, Skill } from "@hourbank/shared";
-import { fallbackListings, fallbackProfileDetails, fallbackProfiles, fallbackSkills } from "./fallback-data";
+import type {
+  ListingCategory,
+  ListingSummary,
+  ListingType,
+  ProfileDetail,
+  PublicProfile,
+  Skill,
+  TradeDetail,
+} from "@hourbank/shared";
+import { fallbackListings, fallbackProfileDetails, fallbackProfiles, fallbackSkills, fallbackTrades } from "./fallback-data";
 
 const apiBaseUrl = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:4100";
 
@@ -30,6 +38,16 @@ export async function getProfile(id: string): Promise<ProfileDetail | null> {
   const fallback = fallbackProfileDetails.find((profile) => profile.id === id) ?? null;
 
   return getJson<ProfileDetail | null>(`/profiles/${id}`, fallback);
+}
+
+export async function getTrades(): Promise<TradeDetail[]> {
+  return getJson<TradeDetail[]>("/trades", fallbackTrades);
+}
+
+export async function getTrade(id: string): Promise<TradeDetail | null> {
+  const fallback = fallbackTrades.find((trade) => trade.id === id) ?? null;
+
+  return getJson<TradeDetail | null>(`/trades/${id}`, fallback);
 }
 
 async function getJson<T>(path: string, fallback: T): Promise<T> {
