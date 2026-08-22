@@ -96,6 +96,12 @@ export interface TradeSummary {
   updatedAt: string;
 }
 
+export interface CreateTradeInput {
+  listingId: string;
+  participantId: string;
+  agreedHours: number;
+}
+
 export interface TradeListingSnapshot {
   id: string;
   type: ListingType;

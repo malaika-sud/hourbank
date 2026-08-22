@@ -32,7 +32,7 @@ Built so far:
 - basic listing creation flow with a demo profile selector until Auth0 is added
 - working marketplace filters for offer/request mode and listing category
 - profile editing flow for public profile details and offered/wanted skills
-- seed-backed trade activity view with read-only trade proposal endpoints
+- seed-backed trade activity view and basic trade proposal creation flow
 - Architecture Decision Records in [docs/adr](docs/adr)
 
 Still upcoming:
@@ -155,6 +155,7 @@ Current endpoints:
 - `POST /listings`
 - `GET /trades`
 - `GET /trades/:id`
+- `POST /trades`
 
 `pnpm db:reset` drops the local Docker volume, recreates Postgres, reruns the migration, and loads the seed data.
 

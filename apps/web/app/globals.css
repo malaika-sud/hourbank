@@ -565,9 +565,9 @@ a {
 
 .proposal-preview {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 180px;
+  grid-template-columns: minmax(0, 1fr) 300px;
   gap: 18px;
-  align-items: end;
+  align-items: start;
   border-top: 1px solid var(--line);
   padding-top: 18px;
 }
@@ -816,7 +816,8 @@ a {
 }
 
 .listing-form,
-.profile-form {
+.profile-form,
+.proposal-form {
   display: grid;
   gap: 16px;
 }
@@ -830,14 +831,17 @@ a {
 .listing-form label,
 .listing-form fieldset,
 .profile-form label,
-.profile-form fieldset {
+.profile-form fieldset,
+.proposal-form label,
+.proposal-form fieldset {
   display: grid;
   gap: 7px;
   min-width: 0;
 }
 
 .listing-form fieldset,
-.profile-form fieldset {
+.profile-form fieldset,
+.proposal-form fieldset {
   border: 0;
   margin: 0;
   padding: 0;
@@ -846,7 +850,9 @@ a {
 .listing-form label span,
 .listing-form legend,
 .profile-form label span,
-.profile-form legend {
+.profile-form legend,
+.proposal-form label span,
+.proposal-form legend {
   color: var(--muted);
   font-size: 13px;
   font-weight: 800;
@@ -857,7 +863,10 @@ a {
 .listing-form textarea,
 .profile-form input,
 .profile-form select,
-.profile-form textarea {
+.profile-form textarea,
+.proposal-form input,
+.proposal-form select,
+.proposal-form textarea {
   width: 100%;
   border: 1px solid var(--line);
   border-radius: 8px;
@@ -868,7 +877,8 @@ a {
 }
 
 .listing-form textarea,
-.profile-form textarea {
+.profile-form textarea,
+.proposal-form textarea {
   resize: vertical;
 }
 
@@ -877,7 +887,10 @@ a {
 .listing-form textarea:focus,
 .profile-form input:focus,
 .profile-form select:focus,
-.profile-form textarea:focus {
+.profile-form textarea:focus,
+.proposal-form input:focus,
+.proposal-form select:focus,
+.proposal-form textarea:focus {
   border-color: var(--green);
   outline: 3px solid rgba(47, 111, 94, 0.14);
 }
