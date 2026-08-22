@@ -565,9 +565,9 @@ a {
 
 .proposal-preview {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 180px;
+  grid-template-columns: minmax(0, 1fr) 300px;
   gap: 18px;
-  align-items: end;
+  align-items: start;
   border-top: 1px solid var(--line);
   padding-top: 18px;
 }
@@ -662,6 +662,142 @@ a {
   width: fit-content;
 }
 
+.trade-list {
+  display: grid;
+  gap: 14px;
+}
+
+.trade-card {
+  display: grid;
+  gap: 16px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 18px;
+  background: rgba(255, 253, 248, 0.86);
+  box-shadow: var(--shadow);
+}
+
+.trade-card-header,
+.trade-meta-list div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.trade-card-header {
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.trade-card h3 {
+  margin: 8px 0 0;
+  font-size: 22px;
+  line-height: 1.2;
+}
+
+.trade-card h3 a:hover {
+  color: var(--green);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.trade-card p {
+  margin: 8px 0 0;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+.status-chip {
+  width: fit-content;
+  border-radius: 999px;
+  padding: 5px 9px;
+  color: var(--blue);
+  background: var(--blue-soft);
+  font-size: 12px;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.status-chip.accepted,
+.status-chip.in_progress,
+.status-chip.completed {
+  color: var(--green);
+  background: var(--green-soft);
+}
+
+.status-chip.cancelled,
+.status-chip.disputed {
+  color: #7c2d2d;
+  background: #f8dddd;
+}
+
+.trade-party-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.trade-party {
+  display: grid;
+  grid-template-columns: 42px minmax(0, 1fr);
+  align-items: center;
+  gap: 10px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 10px;
+  background: var(--panel);
+  transition: border-color 140ms ease, transform 140ms ease;
+}
+
+.trade-party:hover {
+  border-color: rgba(47, 111, 94, 0.42);
+  transform: translateY(-1px);
+}
+
+.trade-party:hover .avatar {
+  background: var(--green);
+}
+
+.trade-party span,
+.trade-party small,
+.trade-meta-list dt {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.trade-party strong {
+  display: block;
+  margin-top: 2px;
+  font-size: 15px;
+}
+
+.trade-party small {
+  display: block;
+  margin-top: 2px;
+}
+
+.trade-meta-list {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+}
+
+.trade-meta-list div {
+  border-top: 1px solid var(--line);
+  padding-top: 10px;
+}
+
+.trade-meta-list dt,
+.trade-meta-list dd {
+  margin: 0;
+}
+
+.trade-meta-list dd {
+  font-weight: 800;
+}
+
 .skill-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -680,7 +816,8 @@ a {
 }
 
 .listing-form,
-.profile-form {
+.profile-form,
+.proposal-form {
   display: grid;
   gap: 16px;
 }
@@ -694,14 +831,17 @@ a {
 .listing-form label,
 .listing-form fieldset,
 .profile-form label,
-.profile-form fieldset {
+.profile-form fieldset,
+.proposal-form label,
+.proposal-form fieldset {
   display: grid;
   gap: 7px;
   min-width: 0;
 }
 
 .listing-form fieldset,
-.profile-form fieldset {
+.profile-form fieldset,
+.proposal-form fieldset {
   border: 0;
   margin: 0;
   padding: 0;
@@ -710,7 +850,9 @@ a {
 .listing-form label span,
 .listing-form legend,
 .profile-form label span,
-.profile-form legend {
+.profile-form legend,
+.proposal-form label span,
+.proposal-form legend {
   color: var(--muted);
   font-size: 13px;
   font-weight: 800;
@@ -721,7 +863,10 @@ a {
 .listing-form textarea,
 .profile-form input,
 .profile-form select,
-.profile-form textarea {
+.profile-form textarea,
+.proposal-form input,
+.proposal-form select,
+.proposal-form textarea {
   width: 100%;
   border: 1px solid var(--line);
   border-radius: 8px;
@@ -732,7 +877,8 @@ a {
 }
 
 .listing-form textarea,
-.profile-form textarea {
+.profile-form textarea,
+.proposal-form textarea {
   resize: vertical;
 }
 
@@ -741,7 +887,10 @@ a {
 .listing-form textarea:focus,
 .profile-form input:focus,
 .profile-form select:focus,
-.profile-form textarea:focus {
+.profile-form textarea:focus,
+.proposal-form input:focus,
+.proposal-form select:focus,
+.proposal-form textarea:focus {
   border-color: var(--green);
   outline: 3px solid rgba(47, 111, 94, 0.14);
 }
@@ -886,6 +1035,7 @@ a {
   .proposal-preview,
   .skill-grid,
   .skill-edit-grid,
+  .trade-party-grid,
   .field-row {
     grid-template-columns: 1fr;
   }

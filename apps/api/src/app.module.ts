@@ -4,8 +4,9 @@ import { HealthModule } from "./health/health.module.js";
 import { ListingsModule } from "./listings/listings.module.js";
 import { ProfilesModule } from "./profiles/profiles.module.js";
 import { SkillsModule } from "./skills/skills.module.js";
+import { TradesModule } from "./trades/trades.module.js";
 
 @Module({
-  imports: [DatabaseModule, HealthModule, ListingsModule, ProfilesModule, SkillsModule],
+  imports: [DatabaseModule, HealthModule, ListingsModule, ProfilesModule, SkillsModule, TradesModule],
 })
 export class AppModule {}

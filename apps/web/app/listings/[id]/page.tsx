@@ -2,8 +2,9 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { ListingSummary, ProfileDetail } from "@hourbank/shared";
-import { getListing, getListings, getProfile } from "../../../lib/api";
+import { getListing, getListings, getProfile, getProfiles, getTrades } from "../../../lib/api";
 import { formatHours, getProfileInitials, titleCaseListingType } from "../../../lib/format";
+import { TradeProposalForm } from "./trade-proposal-form";
 
 interface ListingPageProps {
   params: Promise<{ id: string }>;
@@ -26,7 +27,12 @@ export default async function ListingPage({ params }: ListingPageProps) {
     notFound();
   }
 
-  const [profile, listings] = await Promise.all([getProfile(listing.userId), getListings()]);
+  const [profile, listings, profiles, trades] = await Promise.all([
+    getProfile(listing.userId),
+    getListings(),
+    getProfiles(),
+    getTrades(),
+  ]);
   const relatedListings = listings
     .filter((candidate) => candidate.userId === listing.userId && candidate.id !== listing.id)
     .slice(0, 3);
@@ -41,6 +47,7 @@ export default async function ListingPage({ params }: ListingPageProps) {
 
         <nav className="nav-list" aria-label="Primary">
           <Link href="/">Marketplace</Link>
+          <Link href="/trades">Trades</Link>
           <a href="/#neighbors">Neighbors</a>
           <a href="/#wallet">Wallet</a>
         </nav>
@@ -98,12 +105,16 @@ export default async function ListingPage({ params }: ListingPageProps) {
                 <p className="eyebrow">Next workflow</p>
                 <h3>{listing.type === "offer" ? "Propose a trade" : "Offer to help"}</h3>
                 <p>
-                  Agree on hours, timing, and the kind of help before credits are reserved.
+                  Start a proposed exchange with an agreed hour estimate. Accepting proposals and
+                  reserving credits will come next.
                 </p>
               </div>
-              <button className="primary-action" type="button" disabled>
-                Propose trade
-              </button>
+              <TradeProposalForm
+                listing={listing}
+                ownerProfile={profile}
+                profiles={profiles}
+                trades={trades}
+              />
             </div>
           </article>
 

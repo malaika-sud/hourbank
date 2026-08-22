@@ -43,6 +43,7 @@ export default async function HomePage({ searchParams }: HomePageProps) {
           <Link className="active" href="/">
             Marketplace
           </Link>
+          <Link href="/trades">Trades</Link>
           <a href="/#neighbors">Neighbors</a>
           <a href="/#wallet">Wallet</a>
         </nav>

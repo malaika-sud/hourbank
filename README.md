@@ -32,12 +32,13 @@ Built so far:
 - basic listing creation flow with a demo profile selector until Auth0 is added
 - working marketplace filters for offer/request mode and listing category
 - profile editing flow for public profile details and offered/wanted skills
+- seed-backed trade activity view and basic trade proposal creation flow
 - Architecture Decision Records in [docs/adr](docs/adr)
 
 Still upcoming:
 
 - Auth0 login and user onboarding
-- trade proposals and acceptance flow
+- trade proposal creation and acceptance flow
 - Go ledger service for credit movement and escrow
 - PostGIS map discovery
 - AI effort estimator with an evaluation harness
@@ -152,6 +153,9 @@ Current endpoints:
 - `GET /listings?type=offer&category=Education`
 - `GET /listings/:id`
 - `POST /listings`
+- `GET /trades`
+- `GET /trades/:id`
+- `POST /trades`
 
 `pnpm db:reset` drops the local Docker volume, recreates Postgres, reruns the migration, and loads the seed data.
 
