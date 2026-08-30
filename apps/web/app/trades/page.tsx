@@ -1,8 +1,14 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import type { PublicProfile, TradeDetail, TradeStatus } from "@hourbank/shared";
+import type { PublicProfile, TradeDetail } from "@hourbank/shared";
 import { getTrades } from "../../lib/api";
-import { formatHours, getProfileInitials, titleCaseListingType } from "../../lib/format";
+import {
+  formatCreditCount,
+  formatHours,
+  formatTradeStatus,
+  getProfileInitials,
+  titleCaseListingType,
+} from "../../lib/format";
 
 export const metadata: Metadata = {
   title: "Trades | HourBank",
@@ -43,7 +49,7 @@ export default async function TradesPage() {
             <p className="eyebrow">Trade desk</p>
             <h2>Track proposed service exchanges</h2>
           </div>
-          <div className="status-pill">Read-only proposal view</div>
+          <div className="status-pill">Proposal workflow</div>
         </header>
 
         <section className="stats-grid" aria-label="Trade summary">
@@ -116,10 +122,13 @@ function TradeCard({ trade }: { trade: TradeDetail }) {
       <div>
         <p className="eyebrow">{titleCaseListingType(trade.listing.type)} listing</p>
         <h3>
-          <Link href={`/listings/${trade.listing.id}`}>{trade.listing.title}</Link>
+          <Link href={`/trades/${trade.id}`}>{trade.listing.title}</Link>
         </h3>
         <p>
-          {trade.listing.category} in {trade.listing.approxArea}
+          {trade.listing.category} in {trade.listing.approxArea}.{" "}
+          <Link className="inline-link" href={`/listings/${trade.listing.id}`}>
+            View listing
+          </Link>
         </p>
       </div>
 
@@ -153,15 +162,4 @@ function TradeParty({ label, profile }: { label: string; profile: PublicProfile 
       </div>
     </Link>
   );
-}
-
-function formatTradeStatus(status: TradeStatus): string {
-  return status
-    .split("_")
-    .map((part) => part[0].toUpperCase() + part.slice(1))
-    .join(" ");
-}
-
-function formatCreditCount(credits: number): string {
-  return Number.isInteger(credits) ? credits.toString() : credits.toFixed(2);
 }

@@ -33,6 +33,7 @@ Built so far:
 - working marketplace filters for offer/request mode and listing category
 - profile editing flow for public profile details and offered/wanted skills
 - seed-backed trade activity view and basic trade proposal creation flow
+- trade detail page with proposed trade accept/cancel actions
 - Architecture Decision Records in [docs/adr](docs/adr)
 
 Still upcoming:
@@ -156,6 +157,7 @@ Current endpoints:
 - `GET /trades`
 - `GET /trades/:id`
 - `POST /trades`
+- `PATCH /trades/:id/status`
 
 `pnpm db:reset` drops the local Docker volume, recreates Postgres, reruns the migration, and loads the seed data.
 

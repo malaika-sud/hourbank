@@ -1,5 +1,14 @@
 import { BadRequestException, Inject, Injectable, NotFoundException } from "@nestjs/common";
-import type { CreateTradeInput, ListingStatus, ListingType, TradeDetail, TradeStatus } from "@hourbank/shared";
+import {
+  tradeDecisionStatuses,
+  type CreateTradeInput,
+  type ListingStatus,
+  type ListingType,
+  type TradeDecisionStatus,
+  type TradeDetail,
+  type TradeStatus,
+  type UpdateTradeStatusInput,
+} from "@hourbank/shared";
 import { DatabaseService } from "../database/database.service.js";
 
 interface TradeRow {
@@ -33,6 +42,11 @@ interface TradeListingRow {
   userId: string;
   type: ListingType;
   status: ListingStatus;
+}
+
+interface TradeStatusRow {
+  id: string;
+  status: TradeStatus;
 }
 
 @Injectable()
@@ -114,6 +128,26 @@ export class TradesService {
     return this.findById(result.rows[0].id);
   }
 
+  async updateStatus(id: string, body: unknown): Promise<TradeDetail> {
+    const input = parseUpdateTradeStatusInput(body);
+    const trade = await this.findTradeStatus(id);
+
+    if (trade.status !== "proposed") {
+      throw new BadRequestException("Only proposed trades can be accepted or cancelled");
+    }
+
+    await this.database.query(
+      `
+        UPDATE trades
+        SET status = $2
+        WHERE id = $1
+      `,
+      [id, input.status],
+    );
+
+    return this.findById(id);
+  }
+
   async findById(id: string): Promise<TradeDetail> {
     const result = await this.database.query<TradeRow>(
       `
@@ -157,6 +191,27 @@ export class TradesService {
     }
 
     return toTradeDetail(trade);
+  }
+
+  private async findTradeStatus(id: string): Promise<TradeStatusRow> {
+    const result = await this.database.query<TradeStatusRow>(
+      `
+        SELECT
+          id::text,
+          status::text AS status
+        FROM trades
+        WHERE id = $1
+      `,
+      [id],
+    );
+
+    const trade = result.rows[0];
+
+    if (!trade) {
+      throw new NotFoundException("Trade not found");
+    }
+
+    return trade;
   }
 
   private async findListingForProposal(id: string): Promise<TradeListingRow> {
@@ -229,6 +284,16 @@ function parseCreateTradeInput(body: unknown): CreateTradeInput {
   };
 }
 
+function parseUpdateTradeStatusInput(body: unknown): UpdateTradeStatusInput {
+  if (!isRecord(body)) {
+    throw new BadRequestException("Request body is required");
+  }
+
+  return {
+    status: parseTradeDecisionStatus(body.status),
+  };
+}
+
 function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === "object" && value !== null && !Array.isArray(value);
 }
@@ -249,6 +314,14 @@ function parseAgreedHours(value: unknown): number {
   }
 
   return Math.round(hours * 100) / 100;
+}
+
+function parseTradeDecisionStatus(value: unknown): TradeDecisionStatus {
+  if (typeof value === "string" && tradeDecisionStatuses.includes(value as TradeDecisionStatus)) {
+    return value as TradeDecisionStatus;
+  }
+
+  throw new BadRequestException("Trade status must be accepted or cancelled");
 }
 
 function isUuid(value: string): boolean {
