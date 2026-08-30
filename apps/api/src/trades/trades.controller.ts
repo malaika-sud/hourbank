@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Inject, Param, Post } from "@nestjs/common";
+import { Body, Controller, Get, Inject, Param, Patch, Post } from "@nestjs/common";
 import { TradesService } from "./trades.service.js";
 
 @Controller("trades")
@@ -18,5 +18,10 @@ export class TradesController {
   @Post()
   create(@Body() body: unknown) {
     return this.tradesService.create(body);
+  }
+
+  @Patch(":id/status")
+  updateStatus(@Param("id") id: string, @Body() body: unknown) {
+    return this.tradesService.updateStatus(id, body);
   }
 }

@@ -415,6 +415,33 @@ a {
   opacity: 0.68;
 }
 
+.secondary-action {
+  display: grid;
+  width: 100%;
+  min-height: 42px;
+  place-items: center;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  color: var(--ink);
+  background: var(--panel);
+  font-weight: 800;
+}
+
+.secondary-action:hover {
+  border-color: rgba(47, 111, 94, 0.42);
+  color: var(--green);
+}
+
+.secondary-action:disabled {
+  cursor: not-allowed;
+  opacity: 0.68;
+}
+
+.danger-action:hover {
+  border-color: rgba(124, 45, 45, 0.38);
+  color: #7c2d2d;
+}
+
 .compact-action {
   width: auto;
   min-height: 38px;
@@ -703,6 +730,17 @@ a {
   text-underline-offset: 3px;
 }
 
+.inline-link {
+  color: var(--green);
+  font-weight: 800;
+}
+
+.inline-link:hover,
+.trade-linked-listing h3 a:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
 .trade-card p {
   margin: 8px 0 0;
   color: var(--muted);
@@ -736,6 +774,11 @@ a {
 .trade-party-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.trade-party-stack {
+  display: grid;
   gap: 10px;
 }
 
@@ -796,6 +839,33 @@ a {
 
 .trade-meta-list dd {
   font-weight: 800;
+}
+
+.trade-linked-listing,
+.trade-action-panel {
+  display: grid;
+  gap: 12px;
+  border-top: 1px solid var(--line);
+  padding-top: 18px;
+}
+
+.trade-linked-listing h3,
+.trade-action-panel h3 {
+  margin: 0;
+  font-size: 20px;
+}
+
+.trade-linked-listing p,
+.trade-action-panel p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+.action-row {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
 }
 
 .skill-grid {
@@ -1033,6 +1103,7 @@ a {
   .detail-hero,
   .profile-hero,
   .proposal-preview,
+  .action-row,
   .skill-grid,
   .skill-edit-grid,
   .trade-party-grid,

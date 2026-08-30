@@ -20,6 +20,9 @@ export const tradeStatuses = [
 ] as const;
 export type TradeStatus = (typeof tradeStatuses)[number];
 
+export const tradeDecisionStatuses = ["accepted", "cancelled"] as const;
+export type TradeDecisionStatus = (typeof tradeDecisionStatuses)[number];
+
 export const ledgerTransactionKinds = [
   "grant",
   "escrow_hold",
@@ -100,6 +103,10 @@ export interface CreateTradeInput {
   listingId: string;
   participantId: string;
   agreedHours: number;
+}
+
+export interface UpdateTradeStatusInput {
+  status: TradeDecisionStatus;
 }
 
 export interface TradeListingSnapshot {
