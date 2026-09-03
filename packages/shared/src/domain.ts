@@ -131,6 +131,23 @@ export interface LedgerTransactionSummary {
   createdAt: string;
 }
 
+export interface WalletSummary {
+  profile: PublicProfile;
+  accountId: string | null;
+  availableBalance: number;
+}
+
+export interface WalletEntrySummary {
+  transactionId: string;
+  kind: LedgerTransactionKind;
+  amount: number;
+  createdAt: string;
+}
+
+export interface WalletDetail extends WalletSummary {
+  entries: WalletEntrySummary[];
+}
+
 export interface AppraisalSummary {
   id: string;
   listingId: string;

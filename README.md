@@ -34,13 +34,14 @@ Built so far:
 - profile editing flow for public profile details and offered/wanted skills
 - seed-backed trade activity view and basic trade proposal creation flow
 - trade detail page with proposed trade accept/cancel actions
+- ledger-backed wallet balance and account activity pages
 - Architecture Decision Records in [docs/adr](docs/adr)
 
 Still upcoming:
 
 - Auth0 login and user onboarding
-- trade proposal creation and acceptance flow
-- Go ledger service for credit movement and escrow
+- trade completion and ledger-backed escrow flow
+- Go ledger service for credit movement
 - PostGIS map discovery
 - AI effort estimator with an evaluation harness
 
@@ -107,7 +108,7 @@ The schema still stores `agreed_hours`, `credit_multiplier`, and generated `agre
 | --------- | ----------------------------------------------------------- | ----------- |
 | M0        | Monorepo, local Postgres/PostGIS, base schema, API shell    | In progress |
 | M1        | Profiles and offer/request listings                         | In progress |
-| M2        | Go ledger, double-entry credit movement, escrow, trade loop | Planned     |
+| M2        | Go ledger, double-entry credit movement, escrow, trade loop | In progress |
 | M3        | PostGIS discovery and map view                              | Planned     |
 | M4        | Trade chat, reviews, and reputation                         | Planned     |
 | M5        | AI effort estimator with eval and bias checks               | Planned     |
@@ -158,6 +159,8 @@ Current endpoints:
 - `GET /trades/:id`
 - `POST /trades`
 - `PATCH /trades/:id/status`
+- `GET /wallets`
+- `GET /wallets/:profileId`
 
 `pnpm db:reset` drops the local Docker volume, recreates Postgres, reruns the migration, and loads the seed data.
 

@@ -6,8 +6,17 @@ import type {
   PublicProfile,
   Skill,
   TradeDetail,
+  WalletDetail,
+  WalletSummary,
 } from "@hourbank/shared";
-import { fallbackListings, fallbackProfileDetails, fallbackProfiles, fallbackSkills, fallbackTrades } from "./fallback-data";
+import {
+  fallbackListings,
+  fallbackProfileDetails,
+  fallbackProfiles,
+  fallbackSkills,
+  fallbackTrades,
+  fallbackWallets,
+} from "./fallback-data";
 
 const apiBaseUrl = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:4100";
 
@@ -48,6 +57,16 @@ export async function getTrade(id: string): Promise<TradeDetail | null> {
   const fallback = fallbackTrades.find((trade) => trade.id === id) ?? null;
 
   return getJson<TradeDetail | null>(`/trades/${id}`, fallback);
+}
+
+export async function getWallets(): Promise<WalletSummary[]> {
+  return getJson<WalletSummary[]>("/wallets", fallbackWallets);
+}
+
+export async function getWallet(profileId: string): Promise<WalletDetail | null> {
+  const fallback = fallbackWallets.find((wallet) => wallet.profile.id === profileId) ?? null;
+
+  return getJson<WalletDetail | null>(`/wallets/${profileId}`, fallback);
 }
 
 async function getJson<T>(path: string, fallback: T): Promise<T> {
