@@ -1,6 +1,6 @@
 # HourBank API
 
-This is the first API surface for HourBank. It is still early, but it now supports the core profile and listing flows needed to browse the seed marketplace, create demo listings, edit public profile details, and move seed-backed trade proposals through basic accept/cancel decisions before auth is added.
+This is the first API surface for HourBank. It is still early, but it now supports the core profile and listing flows needed to browse the seed marketplace, create demo listings, edit public profile details, move seed-backed trade proposals through basic accept/cancel decisions, and read wallet balances from the ledger tables before auth is added.
 
 ## Local Commands
 
@@ -27,5 +27,7 @@ Useful endpoints:
 - `GET http://localhost:4100/trades/:id`
 - `POST http://localhost:4100/trades`
 - `PATCH http://localhost:4100/trades/:id/status`
+- `GET http://localhost:4100/wallets`
+- `GET http://localhost:4100/wallets/:profileId`
 
 The API reads `DATABASE_URL`, `API_PORT`, and `CORS_ORIGIN` from the environment. A root `.env` file is loaded automatically in local development.

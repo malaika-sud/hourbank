@@ -1,4 +1,11 @@
-import type { ListingSummary, ProfileDetail, PublicProfile, Skill, TradeDetail } from "@hourbank/shared";
+import type {
+  ListingSummary,
+  ProfileDetail,
+  PublicProfile,
+  Skill,
+  TradeDetail,
+  WalletDetail,
+} from "@hourbank/shared";
 
 export const fallbackSkills: Skill[] = [
   {
@@ -199,5 +206,47 @@ export const fallbackTrades: TradeDetail[] = [
     },
     requester: fallbackProfiles[2],
     provider: fallbackProfiles[1],
+  },
+];
+
+export const fallbackWallets: WalletDetail[] = [
+  {
+    profile: fallbackProfiles[0],
+    accountId: "40000000-0000-0000-0000-000000000101",
+    availableBalance: 5,
+    entries: [
+      {
+        transactionId: "50000000-0000-0000-0000-000000000001",
+        kind: "grant",
+        amount: 5,
+        createdAt: "2026-07-12T00:03:21.531Z",
+      },
+    ],
+  },
+  {
+    profile: fallbackProfiles[1],
+    accountId: "40000000-0000-0000-0000-000000000102",
+    availableBalance: 5,
+    entries: [
+      {
+        transactionId: "50000000-0000-0000-0000-000000000002",
+        kind: "grant",
+        amount: 5,
+        createdAt: "2026-07-12T00:03:21.531Z",
+      },
+    ],
+  },
+  {
+    profile: fallbackProfiles[2],
+    accountId: "40000000-0000-0000-0000-000000000103",
+    availableBalance: 5,
+    entries: [
+      {
+        transactionId: "50000000-0000-0000-0000-000000000003",
+        kind: "grant",
+        amount: 5,
+        createdAt: "2026-07-12T00:03:21.531Z",
+      },
+    ],
   },
 ];

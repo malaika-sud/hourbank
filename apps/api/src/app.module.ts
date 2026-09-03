@@ -5,8 +5,9 @@ import { ListingsModule } from "./listings/listings.module.js";
 import { ProfilesModule } from "./profiles/profiles.module.js";
 import { SkillsModule } from "./skills/skills.module.js";
 import { TradesModule } from "./trades/trades.module.js";
+import { WalletsModule } from "./wallets/wallets.module.js";
 
 @Module({
-  imports: [DatabaseModule, HealthModule, ListingsModule, ProfilesModule, SkillsModule, TradesModule],
+  imports: [DatabaseModule, HealthModule, ListingsModule, ProfilesModule, SkillsModule, TradesModule, WalletsModule],
 })
 export class AppModule {}

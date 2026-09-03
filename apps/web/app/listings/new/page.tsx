@@ -22,7 +22,7 @@ export default async function NewListingPage() {
           <Link href="/">Marketplace</Link>
           <Link href="/trades">Trades</Link>
           <a href="/#neighbors">Neighbors</a>
-          <a href="/#wallet">Wallet</a>
+          <Link href="/wallets">Wallet</Link>
         </nav>
 
         <div className="credit-panel">

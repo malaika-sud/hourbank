@@ -45,7 +45,7 @@ export default async function TradePage({ params }: TradePageProps) {
           <Link href="/">Marketplace</Link>
           <Link className="active" href="/trades">Trades</Link>
           <a href="/#neighbors">Neighbors</a>
-          <a href="/#wallet">Wallet</a>
+          <Link href="/wallets">Wallet</Link>
         </nav>
 
         <div className="credit-panel">
